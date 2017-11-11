@@ -1,0 +1,22 @@
+.wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.div1 {
+    margin: 0px auto;
+    margin-top: 10px;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.div2 {
+    width: 100%;
+    display: table;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0 auto;
+    visibility: visible;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="en">
+<head>
+    <title>Dikzakken</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+
+<div class="wrapper">
+    <h1>DIKZAKKEN</h1>
+    <div class="div1">
+        <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
+            <p align="center" th:text="${deelnemer.name}"></p>
+            <table width="100%">
+                <tr>
+                    <th style="padding-left: 10px" align="left">datum</th>
+                    <th align="left">kg</th>
+                    <th align="right">omvang</th>
+                </tr>
+                <tr th:each="meeting: ${deelnemer.metingen}">
+                    <td style="padding-left: 10px" align="left" th:text="${meeting.time}"></td>
+                    <td align="left" th:text="${meeting.gewicht}"></td>
+                    <td align="right" th:text="${meeting.omvang}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="div2">
+        <form method="post" th:object="${newmeeting}" th:action="@{/new/}">
+            <b>Nieuwe meeting</b><br/>
+            Gewicht: <input type="text" th:field="*{gewicht}"/><br/>
+            Omvang: <input type="text" th:field="*{omvang}"/><br/>
+            Deelnemer: <select th:field="*{name}" id="names">
+            <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
+                    th:text="${deelnemer.name}"></option>
+        </select><br/>
+            <input type="submit" name="Submit"/>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

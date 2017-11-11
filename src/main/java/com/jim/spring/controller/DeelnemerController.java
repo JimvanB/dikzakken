@@ -1,0 +1,56 @@
+package com.jim.spring.controller;
+
+import com.jim.spring.command.MeetingCommand;
+import com.jim.spring.convertor.MeetingConverter;
+import com.jim.spring.domain.Deelnemer;
+import com.jim.spring.domain.Meeting;
+import com.jim.spring.service.DeelnemerService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+/**
+ * Created by jim on 10-11-17.
+ */
+@Controller
+public class DeelnemerController {
+
+    private DeelnemerService deelnemerService;
+    private MeetingConverter meetingConverter;
+
+    public DeelnemerController(DeelnemerService deelnemerService, MeetingConverter meetingConverter) {
+        this.deelnemerService = deelnemerService;
+        this.meetingConverter = meetingConverter;
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("deelnemers", deelnemerService.getAllDeelnemers());
+        model.addAttribute("newmeeting", new MeetingCommand());
+        return "index";
+    }
+
+    @GetMapping("/errorss")
+    public String error(Model model) {
+
+        return "index";
+    }
+
+    @Transactional
+    @PostMapping("/new/")
+    public String newMeeting(@Valid @ModelAttribute MeetingCommand newmeeting, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            Meeting meeting = meetingConverter.convert(newmeeting);
+            Deelnemer deelnemer = deelnemerService.findDeelnemerByName(newmeeting.getName());
+            deelnemer.addMeeting(meeting);
+            return "redirect:/";
+        }
+        return "/errorss";
+    }
+}
