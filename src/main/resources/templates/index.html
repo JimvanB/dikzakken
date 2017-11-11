@@ -11,8 +11,18 @@
     <h1>DIKZAKKEN</h1>
     <div class="div1">
         <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
-            <p align="center" th:text="${deelnemer.name}"></p>
+            <p align="center" th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}"></p>
             <table width="100%">
+                <tr>
+                    <td colspan="3">
+                        <table>
+                            <tr>
+                                <td width="150px">Test</td>
+                                <td width="150px">tTest</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
                 <tr>
                     <th style="padding-left: 10px" align="left">datum</th>
                     <th align="left">kg</th>
@@ -26,6 +36,7 @@
             </table>
         </div>
     </div>
+
     <br/>
     <br/>
     <div class="div2">

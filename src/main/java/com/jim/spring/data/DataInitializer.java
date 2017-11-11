@@ -30,7 +30,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         Deelnemer deelnemer1 = new Deelnemer("Jim");
         Meeting meeting = new Meeting(64.2D, 77.5D);
         deelnemer1.addMeeting(meeting);
-        Meeting tweedeMeeting = new Meeting(1D, 2D);
+        Meeting tweedeMeeting = new Meeting(63.9, 77.0D);
         deelnemer1.addMeeting(tweedeMeeting);
 
         Deelnemer deelnemer2 = new Deelnemer("Mireille");

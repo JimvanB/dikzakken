@@ -52,4 +52,24 @@ public class Deelnemer {
         metingen.add(meeting);
         meeting.setDeelnemer(this);
     }
+
+    public Meeting getNulMeeting(){
+        return metingen.get(0);
+    }
+
+    public Meeting getLaatsteMeeting(){
+        return metingen.get(metingen.size()-1);
+    }
+
+    public Double getGewichtVerschilInPercentage(){
+        Double verschil = (getLaatsteMeeting().getGewicht() - getNulMeeting().getGewicht())/getNulMeeting().getGewicht()*100;
+        return Math.round(verschil *100.0)/100.0;
+    }
+
+    public String getGewichtPercentageString(){
+        return "("+getGewichtVerschilInPercentage()+"%)";
+    }
+
+
+
 }
