@@ -54,16 +54,25 @@ public class Deelnemer {
     }
 
     public Meeting getNulMeeting(){
-        return metingen.get(0);
+        if(!metingen.isEmpty()) {
+            return metingen.get(0);
+        } return null;
     }
 
     public Meeting getLaatsteMeeting(){
-        return metingen.get(metingen.size()-1);
+
+        if(!metingen.isEmpty()) {
+            return metingen.get(metingen.size()-1);
+        } return null;
     }
 
     public Double getGewichtVerschilInPercentage(){
-        Double verschil = (getLaatsteMeeting().getGewicht() - getNulMeeting().getGewicht())/getNulMeeting().getGewicht()*100;
-        return Math.round(verschil *100.0)/100.0;
+        if(getLaatsteMeeting() != null && getNulMeeting() != null) {
+            Double verschil = (getLaatsteMeeting().getGewicht() - getNulMeeting().getGewicht()) / getNulMeeting().getGewicht() * 100;
+            return Math.round(verschil * 100.0) / 100.0;
+        } else {
+            return 0.0;
+        }
     }
 
     public String getGewichtPercentageString(){

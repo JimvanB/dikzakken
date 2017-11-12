@@ -1,3 +1,4 @@
+/*
 package com.jim.spring.data;
 
 import com.jim.spring.domain.Deelnemer;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by jim on 10-11-17.
- */
+ *//*
+
 @Component
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -41,3 +44,4 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         deelnemer2 = deelnemerRepository.save(deelnemer2);
     }
 }
+*/

@@ -1,5 +1,7 @@
 package com.jim.spring.domain;
 
+import com.jim.spring.convertor.LocalDateTimeConver;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,6 +19,7 @@ public class Meeting {
     Deelnemer deelnemer;
     Double gewicht;
     Double omvang;
+    @Convert(converter = LocalDateTimeConver.class)
     LocalDateTime time;
 
     Meeting(){}
