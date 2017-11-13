@@ -23,12 +23,14 @@
                     <td align="left" th:text="${meeting.gewicht}"></td>
                     <td align="right" th:text="${meeting.omvang}"></td>
                 </tr>
-                <tr>
-                    <td colspan="3">
-                        <hr/>
-                    </td>
+            </table>
+        </div>
+    </div>
 
-                </tr>
+    <div class="div2">
+        <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
+            <hr/>
+            <table width="100%">
                 <tr>
                     <td style="padding-left: 10px"><b>Totaal:</b></td>
                     <th:block th:if="${deelnemer.isDikker()}">
