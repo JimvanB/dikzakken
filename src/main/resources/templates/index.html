@@ -11,22 +11,12 @@
     <h1>DIKZAKKEN</h1>
     <div class="div1">
         <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
-            <p align="center" th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}"></p>
+            <h3 align="center" th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}"></h3>
             <table width="100%">
-               <!-- <tr>
-                    <td colspan="3">
-                        <table>
-                            <tr>
-                                <td width="150px">Test</td>
-                                <td width="150px">tTest</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>-->
                 <tr>
-                    <th style="padding-left: 10px" align="left">datum</th>
+                    <th style="padding-left: 10px" align="left">Datum</th>
                     <th align="left">kg</th>
-                    <th align="right">omvang</th>
+                    <th align="right">Øcm</th>
                 </tr>
                 <tr th:each="meeting: ${deelnemer.metingen}">
                     <td style="padding-left: 10px" align="left" th:text="${meeting.time}"></td>
@@ -37,9 +27,36 @@
         </div>
     </div>
 
-    <br/>
-    <br/>
     <div class="div2">
+        <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
+            <hr/>
+            <table width="100%">
+                <tr>
+                    <td style="padding-left: 10px"><b>Totaal:</b></td>
+                    <th:block th:if="${deelnemer.isDikker()}">
+                        <td style="color: red; font-weight: bold"
+                            th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></td>
+                    </th:block>
+                    <th:block th:if="${!deelnemer.isDikker()}">
+                        <td style="color: green; font-weight: bold"
+                            th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></td>
+                    </th:block>
+                    <th:block th:if="${deelnemer.isVetter()}">
+                        <td style="color: red;font-weight: bold"
+                            th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></td>
+                    </th:block>
+                    <th:block th:if="${!deelnemer.isVetter()}">
+                        <td style="color: green;font-weight: bold"
+                            th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></td>
+                    </th:block>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <br/>
+
+    <div class="div2" style="padding-left: 10px">
         <form method="post" th:object="${newmeeting}" th:action="@{/new/}">
             <b>Nieuwe meeting</b><br/>
             Gewicht: <input type="text" th:field="*{gewicht}"/><br/>
@@ -51,6 +68,7 @@
             <input type="submit" name="Submit"/>
         </form>
     </div>
+
 </div>
 
 </body>

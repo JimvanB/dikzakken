@@ -75,6 +75,32 @@ public class Deelnemer {
         }
     }
 
+    public Double getGewichtVerschilAbsoluut(){
+        if(getLaatsteMeeting() != null && getNulMeeting() != null) {
+            Double verschil = (getLaatsteMeeting().getGewicht() - getNulMeeting().getGewicht());
+            return Math.round(verschil * 100.0) / 100.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public Double getOmvangVerschilAbsoluut(){
+        if(getLaatsteMeeting() != null && getNulMeeting() != null) {
+            Double verschil = (getLaatsteMeeting().getOmvang() - getNulMeeting().getOmvang());
+            return Math.round(verschil * 100.0) / 100.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public boolean isDikker(){
+       return getGewichtVerschilAbsoluut() > 0.0;
+    }
+
+    public boolean isVetter(){
+        return getOmvangVerschilAbsoluut() > 0.0;
+    }
+
     public String getGewichtPercentageString(){
         return "("+getGewichtVerschilInPercentage()+"%)";
     }
