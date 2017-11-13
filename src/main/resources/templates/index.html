@@ -35,7 +35,7 @@
                     <td style="padding-left: 10px"><b>Totaal:</b></td>
                     <th:block th:if="${deelnemer.isDikker()}">
                         <td style="color: red; font-weight: bold"
-                            th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></td>
+                            th:text="${'+'+deelnemer.getGewichtVerschilAbsoluut()}"></td>
                     </th:block>
                     <th:block th:if="${!deelnemer.isDikker()}">
                         <td style="color: green; font-weight: bold"
@@ -43,7 +43,7 @@
                     </th:block>
                     <th:block th:if="${deelnemer.isVetter()}">
                         <td style="color: red;font-weight: bold"
-                            th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></td>
+                            th:text="${'+'+deelnemer.getOmvangVerschilAbsoluut()}"></td>
                     </th:block>
                     <th:block th:if="${!deelnemer.isVetter()}">
                         <td style="color: green;font-weight: bold"

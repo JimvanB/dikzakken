@@ -102,7 +102,10 @@ public class Deelnemer {
     }
 
     public String getGewichtPercentageString(){
-        return "("+getGewichtVerschilInPercentage()+"%)";
+        if(getGewichtVerschilInPercentage() > 0.0) {
+            return "(+" + getGewichtVerschilInPercentage() + "%)";
+        }
+        return "(" + getGewichtVerschilInPercentage() + "%)";
     }
 
 
