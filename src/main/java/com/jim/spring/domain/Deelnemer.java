@@ -2,6 +2,7 @@ package com.jim.spring.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,8 @@ public class Deelnemer {
     String name;
     @OneToMany(mappedBy = "deelnemer", cascade = CascadeType.ALL)
     List<Meeting> metingen = new ArrayList<>();
+
+
 
     Deelnemer(){}
 

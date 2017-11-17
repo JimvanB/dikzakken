@@ -23,16 +23,19 @@ public class DeelnemerController {
 
     private DeelnemerService deelnemerService;
     private MeetingConverter meetingConverter;
+    private ChartController chartController;
 
-    public DeelnemerController(DeelnemerService deelnemerService, MeetingConverter meetingConverter) {
+    public DeelnemerController(DeelnemerService deelnemerService, MeetingConverter meetingConverter, ChartController chartController) {
         this.deelnemerService = deelnemerService;
         this.meetingConverter = meetingConverter;
+        this.chartController = chartController;
     }
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("deelnemers", deelnemerService.getAllDeelnemers());
         model.addAttribute("newmeeting", new MeetingCommand());
+        model.addAttribute("chartData", chartController.getAllData());
         return "index";
     }
 

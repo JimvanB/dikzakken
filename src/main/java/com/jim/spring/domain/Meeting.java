@@ -4,6 +4,8 @@ import com.jim.spring.convertor.LocalDateTimeConver;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 /**
@@ -21,7 +23,13 @@ public class Meeting {
     Double omvang;
     @Convert(converter = LocalDateTimeConver.class)
     LocalDateTime time;
+    @Transient
+    Date date;
 
+    public Date getDate() {
+        long epoch = time.toEpochSecond(ZoneOffset.UTC);
+        return new Date(epoch*1000);
+    }
     Meeting(){}
 
 
