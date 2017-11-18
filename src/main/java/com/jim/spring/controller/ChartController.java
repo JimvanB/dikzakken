@@ -6,8 +6,10 @@ import com.jim.spring.repository.DeelnemerRepository;
 import com.jim.spring.service.DeelnemerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.websocket.server.PathParam;
 import java.util.*;
 
 /**
@@ -40,6 +42,19 @@ public class ChartController {
         return array;
     }
 
+    @ResponseBody
+    @GetMapping(value = "/chart/{name}", produces = "application/json")
+    public Object[][] getDeelnemerData(@PathVariable("name") String name) {
+        Deelnemer deelnemer = deelnemerService.findDeelnemerByName(name);
+
+
+        Object[][] array = new Object[deelnemer.getMetingen().size()+1][2];
+        array[0][0] = "YEAR";
+        array[0][1] = deelnemer.getName();
+        vulMeetingen(array, new ArrayList(){{add(deelnemer);}});
+        return array;
+    }
+
     private void vulMeetingen(Object[][] array, List<Deelnemer> deelnemerList) {
         Map<String, Double[]> metingen = new HashMap<>();
 
@@ -64,8 +79,9 @@ public class ChartController {
         for (String key : keys) {
             Double[] mtng = metingen.get(key);
             array[counter][0] = key;
-            array[counter][1] = mtng[0];
-            array[counter][2] = mtng[1];
+            for (int i = 0; i < mtng.length; i++) {
+                array[counter][i + 1] = mtng[i];
+            }
             counter++;
         }
     }

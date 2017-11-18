@@ -22,6 +22,32 @@
                         // Adds titles to each axis.
                         0: {title: 'Kg'}
                     },
+                    chartArea: {left: 80, top: 50, right: 10},
+                    legend: {position: 'bottom'}
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
+            });
+        }
+
+        function redrawChart(){
+            var select = document.getElementById("chartSelector");
+            var selectedString = select.options[select.selectedIndex].value;
+            alert(selectedString);
+            $.get("/chart/"+selectedString, function (mydata) {
+                var data = google.visualization.arrayToDataTable(mydata);
+
+
+                var options = {
+                    title: 'Voortgang',
+                    curveType: 'function',
+                    vAxes: {
+                        // Adds titles to each axis.
+                        0: {title: 'Kg'}
+                    },
+                    chartArea: {left: 80, top: 50, right: 10},
                     legend: {position: 'bottom'}
                 };
 
@@ -46,7 +72,8 @@
                     <th align="right">Øcm</th>
                 </tr>
                 <tr th:each="meeting: ${deelnemer.metingen}">
-                    <td style="padding-left: 10px" align="left" th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></td>
+                    <td style="padding-left: 10px" align="left"
+                        th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></td>
                     <td align="left" th:text="${meeting.gewicht}"></td>
                     <td align="right" th:text="${meeting.omvang}"></td>
                 </tr>
@@ -96,8 +123,14 @@
         </form>
     </div>
 
-
-    <div class="div2" id="curve_chart" style="width: 900px; height: 500px"></div>
+    <br/>
+    Show: <select id="chartSelector" onchange="redrawChart();">
+    <option value="all" selected="selected">Allemaal</option>
+    <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
+            th:text="${deelnemer.name}"></option>
+</select>
+    <br/>
+    <div id="curve_chart" style="width: 80%; height: 400px;"></div>
 
 </div>
 
