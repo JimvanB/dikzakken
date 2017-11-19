@@ -7,6 +7,3 @@ INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (62.4, 77, '2017
 INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (63.7, 78, '2017-11-11 10:34:09', 2);
 INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (63.2, 78, '2017-11-16 10:34:09', 2);
 INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (62.5, 78, '2017-11-17 10:34:09', 2);
-INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (70.2, 78, '2017-11-11 10:34:09', 3);
-INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (69.5, 78, '2017-11-16 10:34:09', 3);
-INSERT INTO meeting(gewicht, omvang, time, deelnemer_id) VALUES (69.4, 78, '2017-11-17 10:34:09', 3);

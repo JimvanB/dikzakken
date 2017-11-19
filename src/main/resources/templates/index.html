@@ -35,7 +35,11 @@
         function redrawChart(){
             var select = document.getElementById("chartSelector");
             var selectedString = select.options[select.selectedIndex].value;
-            alert(selectedString);
+
+            if(selectedString == 'all'){
+                drawChart();
+                return;
+            }
             $.get("/chart/"+selectedString, function (mydata) {
                 var data = google.visualization.arrayToDataTable(mydata);
 
@@ -126,7 +130,7 @@
     <br/>
     Show: <select id="chartSelector" onchange="redrawChart();">
     <option value="all" selected="selected">Allemaal</option>
-    <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
+    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}" th:value="${deelnemer.name}"
             th:text="${deelnemer.name}"></option>
 </select>
     <br/>

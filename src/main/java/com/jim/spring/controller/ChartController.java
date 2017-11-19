@@ -2,14 +2,12 @@ package com.jim.spring.controller;
 
 import com.jim.spring.domain.Deelnemer;
 import com.jim.spring.domain.Meeting;
-import com.jim.spring.repository.DeelnemerRepository;
 import com.jim.spring.service.DeelnemerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.websocket.server.PathParam;
 import java.util.*;
 
 /**
@@ -29,9 +27,23 @@ public class ChartController {
     public Object[][] getAllData() {
 
         List<Deelnemer> deelnemerList = deelnemerService.getAllDeelnemers();
+        Iterator<Deelnemer> it = deelnemerList.iterator();
+        deelnemerList = new ArrayList<>();
+        int mostAmountOfMeetingen = 0;
+        while (it.hasNext()){
+            Deelnemer deelnemer = it.next();
+            if(deelnemer.getMetingen().size() == 0){
+                it.remove();
+            } else {
+                deelnemerList.add(deelnemer);
+                if(deelnemer.getMetingen().size() > mostAmountOfMeetingen){
+                    mostAmountOfMeetingen = deelnemer.getMetingen().size();
+                }
+            }
+        }
 
 
-        Object[][] array = new Object[5][deelnemerList.size() + 1];
+        Object[][] array = new Object[++mostAmountOfMeetingen][deelnemerList.size() + 1];
         array[0][0] = "YEAR";
         for (int i = 0; i < deelnemerList.size(); i++) {
             Deelnemer deelnemer = deelnemerList.get(i);
