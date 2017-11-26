@@ -27,4 +27,8 @@ public class DeelnemerService {
     public Deelnemer findDeelnemerByName(String name){
         return deelnemerRepository.findOneByName(name);
     }
+
+    public Deelnemer saveDeelnemer(Deelnemer deelnemer){
+        return deelnemerRepository.save(deelnemer);
+    }
 }
