@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+
+</head>
+<body>
+<section id="cover">
+    <div id="cover_caption">
+        <div class="container">
+            <div class="col-sm-10 offset-sm-1"><h1 class="display-3">Welcome to Dikzakken</h1>
+                <p>Afvallen is een kunst. Maar het helpt als je je vrienden dik kunt noemen. Laat hier het bewijs zien.</p>
+                <form action="" class="form-inline justify-content-center">
+                    <div class="form-group">
+                        <label class="sr-only">Name</label>
+                        <input type="text" class="form-control form-control-lg" placeholder="John Doe"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only">Email</label>
+                        <input type="text" class="form-control form-control-lg" placeholder="johndoe@gmail.com"
+                               style="margin-left: 5px"/>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg" style="margin-left: 5px">Lets go!</button>
+                </form>
+
+                <br/>
+                <a href="#nav-main" class="btn btn-outline-secondary" role="button">&darr;</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" id="nav-main">
+    <a class="navbar-brand" href="#"><img src="img/pizaa.png" style="max-width:27px;"/></a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>
