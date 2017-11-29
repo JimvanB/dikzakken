@@ -17,5 +17,11 @@ public class LoginController {
         return "loginForm";
     }
 
+    @GetMapping("/loginFormError")
+    public String loginError(Model model){
+        model.addAttribute("error", true);
+        return "loginForm";
+    }
+
 
 }

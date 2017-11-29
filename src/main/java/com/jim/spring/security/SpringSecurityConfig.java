@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("Jim").password("jim").roles("ADMIN");
         auth.inMemoryAuthentication().withUser("Mireille").password("dikkie").roles("USER");
     }
@@ -27,9 +27,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/loginForm")
-                    .loginProcessingUrl("/authenticate")
-                    .permitAll();
+                .loginPage("/loginForm")
+                .loginProcessingUrl("/authenticate")
+                .permitAll();
+
 
     }
 
