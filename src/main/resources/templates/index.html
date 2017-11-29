@@ -3,7 +3,7 @@
 <head>
     <title>Dikzakken</title>
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -13,14 +13,19 @@
         function drawChart() {
             $.get("/chart", function (mydata) {
                 var data = google.visualization.arrayToDataTable(mydata);
+                var selectedGroupByDropdownBox = document.getElementById("groupBySelector");
+                var selectedGroupBy = selectedGroupByDropdownBox.options[selectedGroupByDropdownBox.selectedIndex].value;
 
 
                 var options = {
                     title: 'Voortgang',
-                    curveType: 'function',
                     vAxes: {
                         // Adds titles to each axis.
                         0: {title: 'Kg'}
+                    },
+                    hAxes: {
+                        // Adds titles to each axis.
+                        0: {title: selectedGroupBy}
                     },
                     chartArea: {left: 80, top: 50, right: 10},
                     legend: {position: 'bottom'}
@@ -32,24 +37,31 @@
             });
         }
 
-        function redrawChart(){
-            var select = document.getElementById("chartSelector");
-            var selectedString = select.options[select.selectedIndex].value;
+        function redrawChart() {
+            var selectedUserDropdownBox = document.getElementById("chartSelector");
+            var selectedUser = selectedUserDropdownBox.options[selectedUserDropdownBox.selectedIndex].value;
 
-            if(selectedString == 'all'){
+            var selectedGroupByDropdownBox = document.getElementById("groupBySelector");
+            var selectedGroupBy = selectedGroupByDropdownBox.options[selectedGroupByDropdownBox.selectedIndex].value;
+
+
+            if (selectedUser == 'all') {
                 drawChart();
                 return;
             }
-            $.get("/chart/"+selectedString, function (mydata) {
+            $.get("/chart/" + selectedUser+"/"+selectedGroupBy, function (mydata) {
                 var data = google.visualization.arrayToDataTable(mydata);
 
 
                 var options = {
                     title: 'Voortgang',
-                    curveType: 'function',
                     vAxes: {
                         // Adds titles to each axis.
                         0: {title: 'Kg'}
+                    },
+                    hAxes: {
+                        // Adds titles to each axis.
+                        0: {title: selectedGroupBy}
                     },
                     chartArea: {left: 80, top: 50, right: 10},
                     legend: {position: 'bottom'}
@@ -130,8 +142,17 @@
     <br/>
     Show: <select id="chartSelector" onchange="redrawChart();">
     <option value="all" selected="selected">Allemaal</option>
-    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}" th:value="${deelnemer.name}"
+    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}"
+            th:value="${deelnemer.name}"
             th:text="${deelnemer.name}"></option>
+</select>
+    <br/>
+    Group by: <select id="groupBySelector" onchange="redrawChart();">
+    <option value="day" selected="selected">Day</option>
+    <option value="week">Week</option>
+    <option value="month">Month</option>
+    <option value="year">Year</option>
+
 </select>
     <br/>
     <div id="curve_chart" style="width: 80%; height: 400px;"></div>
