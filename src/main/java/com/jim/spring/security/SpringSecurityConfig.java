@@ -28,8 +28,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/loginForm")
-                .loginProcessingUrl("/authenticate")
-                .permitAll();
+                .loginProcessingUrl("/authenticate").permitAll();
+
+
+
+       // http.authorizeRequests().anyRequest().not().authenticated().mvcMatchers("/registratie");
+
+        http.logout()
+                .logoutUrl("logout")
+                .logoutSuccessUrl("/loginForm")
+                .invalidateHttpSession(true);
 
 
     }
@@ -40,5 +48,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/img/**");
         web.ignoring().antMatchers("/styles/**");
         web.ignoring().antMatchers("/node_modules/**");
+        web.ignoring().antMatchers("/registratieForm");
+        web.ignoring().antMatchers("/registratie");
     }
 }

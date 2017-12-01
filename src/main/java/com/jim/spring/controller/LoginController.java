@@ -12,16 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
 
     @GetMapping("/loginForm")
-    public String login(Model model){
-        model.addAttribute("user", new UserCommand());
+    public String login(){
         return "loginForm";
     }
-
-    @GetMapping("/loginFormError")
-    public String loginError(Model model){
-        model.addAttribute("error", true);
-        return "loginForm";
-    }
-
-
 }

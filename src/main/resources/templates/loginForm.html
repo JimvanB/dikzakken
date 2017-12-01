@@ -13,46 +13,22 @@
         <div class="container">
             <div class="col-sm-10 offset-sm-1"><h1 class="display-3">Hé Dikke!</h1>
                 <p>Log hier in.</p>
-                <form th:action="@{/authenticate}" th:object="${user}" class="form-inline justify-content-center"
-                      method="post">
-                    <div class="form-group" th:if="!${#fields.hasErrors('username')}">
+                <form th:action="@{/authenticate}" class="form-inline justify-content-center" method="post">
+                    <div class="col-md-auto" style="padding: 0px; margin: 0px">
                         <label class="sr-only">username</label>
-                        <input type="text" class="form-control form-control-lg" placeholder="Username"
-                               th:field="*{username}"/>
+                        <input type="text" class="form-control form-control-lg" name="username" placeholder="Username"/>
                     </div>
-                    <div class="form-group" th:if="!${#fields.hasErrors('password')}">
+                    <div class="form-group">
                         <label class="sr-only">password</label>
-                        <input type="password" class="form-control form-control-lg" placeholder="Password"
-                               th:field="*{password}"/>
+                        <input type="password" class="form-control form-control-lg" name="password"  placeholder="Password"/>
                     </div>
-                    <div class="col-md-auto has-danger" style="padding: 0px; margin: 0px"
-                         th:if="${#fields.hasErrors('username')}">
-                        <label class="sr-only">username</label>
-                        <input type="text" class="form-control form-control-lg form-control-danger"
-                               placeholder="Username" th:field="*{username}"/>
-                        <p class="form-control-feedback" th:text="${#fields.errors('usernamer')[0]}"></p>
-                    </div>
-                    <div class="col-md-auto has-danger no-padding" th:if="${#fields.hasErrors('password')}">
-                        <label class="sr-only">password</label>
-                        <input type="password" class="form-control form-control-lg form-control-danger"
-                               placeholder="Password" th:field="*{password}"/>
-                        <p class="form-control-feedback" th:text="${#fields.errors('password')[0]}"></p>
-                    </div>
-                    <div class="col-md-auto align-baseline" th:if="!${#fields.hasErrors('*')}">
+                    <div class="col-md-auto align-baseline">
                         <button type="submit" class="btn btn-success btn-lg align-baseline"> Lets go!</button>
                     </div>
-                    <div class="col-md-auto align-baseline" th:if="${#fields.hasErrors('*')}">
-                        <button type="submit" class="btn btn-success btn-lg align-baseline"
-                                th:if="${#fields.hasErrors('*')}">Lets go!
-                        </button>
-                        <p class="form-control-feedback">.</p>
-                    </div>
-
                 </form>
+                <div style="color:#9d223c"  th:if="${param.error}">Foutje, verkeerd username/password</div>
+                Nog niet geregistreerd? Klik <a th:href="@{/registratie}">hier</a> om in te registreren.
             </div>
-            <br/>
-            <a href="#nav-main" class="btn btn-outline-secondary" role="button">&darr;</a>
-
 
         </div>
     </div>
