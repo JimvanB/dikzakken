@@ -23,23 +23,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
+            .and()
+            .formLogin()
                 .loginPage("/loginForm")
-                .loginProcessingUrl("/authenticate").permitAll();
-
-
-
-       // http.authorizeRequests().anyRequest().not().authenticated().mvcMatchers("/registratie");
-
-        http.logout()
-                .logoutUrl("logout")
-                .logoutSuccessUrl("/loginForm")
-                .invalidateHttpSession(true);
-
-
+                .loginProcessingUrl("/authenticate")
+                .permitAll()
+            .and()
+            .logout();
+           // .logoutSuccessUrl("/loginForm");
+        // http.authorizeRequests().anyRequest().not().authenticated().mvcMatchers("/registratie");
     }
 
     @Override

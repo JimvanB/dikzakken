@@ -27,6 +27,7 @@
                     </div>
                 </form>
                 <div style="color:#9d223c"  th:if="${param.error}">Foutje, verkeerd username/password</div>
+                <div style="color:darkgreen"  th:if="${param.logout}">Succesvol uitgelogd</div>
                 Nog niet geregistreerd? Klik <a th:href="@{/registratie}">hier</a> om in te registreren.
             </div>
 

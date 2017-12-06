@@ -4,6 +4,8 @@
     <title>Dikzakken</title>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="styles/styles.css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -75,9 +77,21 @@
     </script>
 </head>
 <body>
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1>DIKZAKKEN</h1>
+        </div>
+        <div class="col">
+            <form th:action="@{/logout}" method="POST">
+                <input class="float-right" type="submit" value="Logout"/>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="wrapper">
-    <h1>DIKZAKKEN</h1>
+
+
     <div class="div1">
         <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
             <h3 align="center" th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}"></h3>
@@ -159,5 +173,7 @@
 
 </div>
 
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </body>
 </html>
