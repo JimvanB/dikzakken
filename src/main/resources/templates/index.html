@@ -51,7 +51,7 @@
                 drawChart();
                 return;
             }
-            $.get("/chart/" + selectedUser+"/"+selectedGroupBy, function (mydata) {
+            $.get("/chart/" + selectedUser + "/" + selectedGroupBy, function (mydata) {
                 var data = google.visualization.arrayToDataTable(mydata);
 
 
@@ -77,103 +77,147 @@
     </script>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h1>DIKZAKKEN</h1>
-        </div>
-        <div class="col">
-            <form th:action="@{/logout}" method="POST">
-                <input class="float-right" type="submit" value="Logout"/>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="wrapper">
+<section id="dikzakken">
+    <div class="section-content">
+        <div class="container">
+            <div class="row py-2">
+                <div class="col">
+                    <h1>DIKZAKKEN</h1>
+                </div>
+                <div class="col">
+                    <form th:action="@{/logout}" method="POST">
+                        <input class="btn btn-danger float-right" type="submit" value="Logout"/>
+                    </form>
+                </div>
+            </div>
 
-
-    <div class="div1">
-        <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
-            <h3 align="center" th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}"></h3>
-            <table width="100%">
-                <tr>
-                    <th style="padding-left: 10px" align="left">Datum</th>
-                    <th align="left">kg</th>
-                    <th align="right">Øcm</th>
-                </tr>
-                <tr th:each="meeting: ${deelnemer.metingen}">
-                    <td style="padding-left: 10px" align="left"
-                        th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></td>
-                    <td align="left" th:text="${meeting.gewicht}"></td>
-                    <td align="right" th:text="${meeting.omvang}"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="div2">
-        <div style="float: left; width: 300px" th:each="deelnemer : ${deelnemers}">
-            <hr/>
-            <table width="100%">
-                <tr>
-                    <td style="padding-left: 10px"><b>Totaal:</b></td>
-                    <th:block th:if="${deelnemer.isDikker()}">
-                        <td style="color: red; font-weight: bold"
-                            th:text="${'+'+deelnemer.getGewichtVerschilAbsoluut()}"></td>
-                    </th:block>
-                    <th:block th:if="${!deelnemer.isDikker()}">
-                        <td style="color: green; font-weight: bold"
-                            th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></td>
-                    </th:block>
-                    <th:block th:if="${deelnemer.isVetter()}">
-                        <td align="right" style="color: red;font-weight: bold"
-                            th:text="${'+'+deelnemer.getOmvangVerschilAbsoluut()}"></td>
-                    </th:block>
-                    <th:block th:if="${!deelnemer.isVetter()}">
-                        <td align="right" style="color: green;font-weight: bold"
-                            th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></td>
-                    </th:block>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-deck">
+                        <div class="card" th:each="deelnemer : ${deelnemers}">
+                            <div class="card-header"
+                                 th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}">
+                            </div>
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col">Datum</div>
+                                    <div class="col">Kg</div>
+                                    <div class="col">Omgvang</div>
+                                </div>
+                                <div class="row" th:each="meeting: ${deelnemer.metingen}">
+                                    <div class="col" th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></div>
+                                    <div class="col" th:text="${meeting.gewicht}"></div>
+                                    <div class="col" th:text="${meeting.omvang}"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><b>Totaal:</b></div>
+                                    <div class="col" th:if="${deelnemer.isDikker()}"
+                                         style="color: red; font-weight: bold"
+                                         th:text="${'+'+deelnemer.getGewichtVerschilAbsoluut()}"></div>
+                                    <div class="col" th:if="${!deelnemer.isDikker()}"
+                                         style="color: green; font-weight: bold"
+                                         th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></div>
+                                    <div class="col" th:if="${deelnemer.isVetter()}"
+                                         style="color: red;font-weight: bold"
+                                         th:text="${'+'+deelnemer.getOmvangVerschilAbsoluut()}"></div>
+                                    <div class="col" th:if="${!deelnemer.isVetter()}"
+                                         style="color: green;font-weight: bold"
+                                         th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <br/>
-    <br/>
-
-    <div class="div2" style="padding-left: 10px">
-        <form method="post" th:object="${newmeeting}" th:action="@{/new/}">
-            <b>Nieuwe meeting</b><br/>
-            Gewicht: <input type="text" th:field="*{gewicht}"/><br/>
-            Omvang: <input type="text" th:field="*{omvang}"/><br/>
-            Deelnemer: <select th:field="*{name}" id="names">
-            <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
-                    th:text="${deelnemer.name}"></option>
-        </select><br/>
-            <input type="submit" name="Submit"/>
-        </form>
+</section>
+<br/>
+<section id="grafiek">
+    <div class="container">
+        <h3>Grafiek</h3>
+        <div class="form-group row">
+            <label for="chartSelector" class="px-3 col-form-label">Deelnemer:</label>
+            <div class="col-2">
+                <select id="chartSelector" onchange="redrawChart();" class="custom-select">
+                    <option value="all" selected="selected">Allemaal</option>
+                    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}"
+                            th:value="${deelnemer.name}"
+                            th:text="${deelnemer.name}"></option>
+                </select>
+            </div>
+            <label for="chartSelector" class="px-3 col-form-label">Periode:</label>
+            <select id="groupBySelector" onchange="redrawChart();" class="custom-select">>
+                <option value="day" selected="selected">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+        <div id="curve_chart"></div>
     </div>
-
-    <br/>
-    Show: <select id="chartSelector" onchange="redrawChart();">
-    <option value="all" selected="selected">Allemaal</option>
-    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}"
-            th:value="${deelnemer.name}"
-            th:text="${deelnemer.name}"></option>
-</select>
-    <br/>
-    Group by: <select id="groupBySelector" onchange="redrawChart();">
-    <option value="day" selected="selected">Day</option>
-    <option value="week">Week</option>
-    <option value="month">Month</option>
-    <option value="year">Year</option>
-
-</select>
-    <br/>
-    <div id="curve_chart" style="width: 80%; height: 400px;"></div>
-
-</div>
-
+</section>
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+
+<!-- Add new meeting modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add meeting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:object="${newmeeting}" th:action="@{/new/}">
+                    <div class="row">
+                        <label for="gewicht-input" class="px-3 col col-form-label">Gewicht:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" th:field="*{gewicht}" id="gewicht-input"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="omvang-input" class="col col-form-label">Omvang:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" th:field="*{omvang}" id="omvang-input"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="date-input" class="col col-form-label">Date</label>
+                        <div class="col">
+                            <input class="form-control" type="date" id="date-input"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="names" class="col col-form-label">Deelnemer</label>
+                        <div class="col">
+                            <select th:field="*{name}" id="names" class="custom-select">
+                                <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
+                                        th:text="${deelnemer.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 </html>
