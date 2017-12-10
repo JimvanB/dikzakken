@@ -90,43 +90,55 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card-deck">
-                        <div class="card" th:each="deelnemer : ${deelnemers}">
-                            <div class="card-header"
-                                 th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}">
-                            </div>
-                            <div class="card-block">
-                                <div class="row">
-                                    <div class="col">Datum</div>
-                                    <div class="col">Kg</div>
-                                    <div class="col">Omgvang</div>
+        <div class="card">
+            <h3 class="card-header">Meetingen</h3>
+            <div class="card-block">
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-group">
+                            <div class="card" th:each="deelnemer : ${deelnemers}">
+                                <div class="card-header text-uppercase font-weight-bold text-center"
+                                     th:text="${deelnemer.name + ' ' + deelnemer.getGewichtPercentageString()}">
                                 </div>
-                                <div class="row" th:each="meeting: ${deelnemer.metingen}">
-                                    <div class="col" th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></div>
-                                    <div class="col" th:text="${meeting.gewicht}"></div>
-                                    <div class="col" th:text="${meeting.omvang}"></div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col">Datum</div>
+                                        <div class="col">Kg</div>
+                                        <div class="col">Omgvang</div>
+                                    </div>
+                                    <div class="row" th:each="meeting: ${deelnemer.metingen}">
+                                        <div class="col"
+                                             th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></div>
+                                        <div class="col" th:text="${meeting.gewicht}"></div>
+                                        <div class="col" th:text="${meeting.omvang}"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><b>Totaal:</b></div>
+                                        <div class="col" th:if="${deelnemer.isDikker()}"
+                                             style="color: red; font-weight: bold"
+                                             th:text="${'+'+deelnemer.getGewichtVerschilAbsoluut()}"></div>
+                                        <div class="col" th:if="${!deelnemer.isDikker()}"
+                                             style="color: green; font-weight: bold"
+                                             th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></div>
+                                        <div class="col" th:if="${deelnemer.isVetter()}"
+                                             style="color: red;font-weight: bold"
+                                             th:text="${'+'+deelnemer.getOmvangVerschilAbsoluut()}"></div>
+                                        <div class="col" th:if="${!deelnemer.isVetter()}"
+                                             style="color: green;font-weight: bold"
+                                             th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></div>
+                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col"><b>Totaal:</b></div>
-                                    <div class="col" th:if="${deelnemer.isDikker()}"
-                                         style="color: red; font-weight: bold"
-                                         th:text="${'+'+deelnemer.getGewichtVerschilAbsoluut()}"></div>
-                                    <div class="col" th:if="${!deelnemer.isDikker()}"
-                                         style="color: green; font-weight: bold"
-                                         th:text="${deelnemer.getGewichtVerschilAbsoluut()}"></div>
-                                    <div class="col" th:if="${deelnemer.isVetter()}"
-                                         style="color: red;font-weight: bold"
-                                         th:text="${'+'+deelnemer.getOmvangVerschilAbsoluut()}"></div>
-                                    <div class="col" th:if="${!deelnemer.isVetter()}"
-                                         style="color: green;font-weight: bold"
-                                         th:text="${deelnemer.getOmvangVerschilAbsoluut()}"></div>
+                                <div class="card-footer text-center">
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add</a>
                                 </div>
-                            </div>
-                            <div class="card-footer text-center">
-                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add</a>
                             </div>
                         </div>
                     </div>
@@ -138,26 +150,30 @@
 <br/>
 <section id="grafiek">
     <div class="container">
-        <h3>Grafiek</h3>
-        <div class="form-group row">
-            <label for="chartSelector" class="px-3 col-form-label">Deelnemer:</label>
-            <div class="col-2">
-                <select id="chartSelector" onchange="redrawChart();" class="custom-select">
-                    <option value="all" selected="selected">Allemaal</option>
-                    <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}"
-                            th:value="${deelnemer.name}"
-                            th:text="${deelnemer.name}"></option>
-                </select>
+        <div class="card">
+            <h3 class="card-header">Grafiek</h3>
+            <div class="card-block">
+                <div class="form-group row">
+                    <label for="chartSelector" class="px-3 col-form-label">Deelnemer:</label>
+                    <div class="col-2">
+                        <select id="chartSelector" onchange="redrawChart();" class="custom-select">
+                            <option value="all" selected="selected">Allemaal</option>
+                            <option th:each="deelnemer : ${deelnemers}" th:if="${#lists.size(deelnemer.metingen) != 0}"
+                                    th:value="${deelnemer.name}"
+                                    th:text="${deelnemer.name}"></option>
+                        </select>
+                    </div>
+                    <label for="chartSelector" class="px-3 col-form-label">Periode:</label>
+                    <select id="groupBySelector" onchange="redrawChart();" class="custom-select">>
+                        <option value="day" selected="selected">Day</option>
+                        <option value="week">Week</option>
+                        <option value="month">Month</option>
+                        <option value="year">Year</option>
+                    </select>
+                </div>
+                <div id="curve_chart" style="height: 400px;"></div>
             </div>
-            <label for="chartSelector" class="px-3 col-form-label">Periode:</label>
-            <select id="groupBySelector" onchange="redrawChart();" class="custom-select">>
-                <option value="day" selected="selected">Day</option>
-                <option value="week">Week</option>
-                <option value="month">Month</option>
-                <option value="year">Year</option>
-            </select>
         </div>
-        <div id="curve_chart"></div>
     </div>
 </section>
 <script src="node_modules/jquery/dist/jquery.js"></script>
@@ -166,7 +182,8 @@
 
 <!-- Add new meeting modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -216,7 +233,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>
