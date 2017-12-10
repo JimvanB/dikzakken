@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="row" th:each="meeting: ${deelnemer.metingen}">
                                         <div class="col"
-                                             th:text="${#dates.format(meeting.getDate(), 'dd-MM-yyyy')}"></div>
+                                             th:text="${#dates.format(meeting.getDate(), 'dd-MM-yy')}"></div>
                                         <div class="col" th:text="${meeting.gewicht}"></div>
                                         <div class="col" th:text="${meeting.omvang}"></div>
                                     </div>
