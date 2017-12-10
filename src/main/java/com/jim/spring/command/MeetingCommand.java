@@ -3,9 +3,10 @@ package com.jim.spring.command;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Created by jim on 10-11-17.
@@ -21,7 +22,13 @@ public class MeetingCommand {
     Double gewicht;
     @NotNull(message = "naam mag niet leeg zijn")
     String name;
-    LocalDateTime time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "datum mag niet leeg zijn")
+    LocalDate time;
+
+    public MeetingCommand(LocalDate time) {
+        this.time = time;
+    }
 
     public String getName() {
         return name;
@@ -47,11 +54,11 @@ public class MeetingCommand {
         this.gewicht = gewicht;
     }
 
-    public LocalDateTime getTime() {
+    public LocalDate getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(LocalDate time) {
         this.time = time;
     }
 }

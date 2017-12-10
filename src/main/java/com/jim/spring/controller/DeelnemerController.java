@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 /**
  * Created by jim on 10-11-17.
@@ -34,7 +35,7 @@ public class DeelnemerController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("deelnemers", deelnemerService.getAllDeelnemers());
-        model.addAttribute("newmeeting", new MeetingCommand());
+        model.addAttribute("newmeeting", new MeetingCommand(LocalDate.now()));
         model.addAttribute("chartData", chartController.getAllData());
         return "index";
     }

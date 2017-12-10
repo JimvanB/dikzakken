@@ -1,11 +1,9 @@
 package com.jim.spring.convertor;
 
-import com.jim.spring.domain.Meeting;
 import com.jim.spring.command.MeetingCommand;
+import com.jim.spring.domain.Meeting;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by jim on 10-11-17.
@@ -14,6 +12,6 @@ import java.time.LocalDateTime;
 public class MeetingConverter implements Converter<MeetingCommand, Meeting> {
     @Override
     public Meeting convert(MeetingCommand meetingCommand) {
-        return new Meeting(meetingCommand.getGewicht(), meetingCommand.getOmvang(), LocalDateTime.now());
+        return new Meeting(meetingCommand.getGewicht(), meetingCommand.getOmvang(), meetingCommand.getTime().atStartOfDay());
     }
 }
