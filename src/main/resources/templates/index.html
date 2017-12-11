@@ -6,8 +6,9 @@
     <link rel="stylesheet" type="text/css" href="styles/style.css"/>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="styles/styles.css"/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="js/gstatic.js"></script>
+    <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -74,6 +75,8 @@
                 chart.draw(data, options);
             });
         }
+
+
     </script>
 </head>
 <body>
@@ -137,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add</a>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" th:attr="data-whatever=${deelnemer.name}">Add</a>
                                 </div>
                             </div>
                         </div>
@@ -176,14 +179,13 @@
         </div>
     </div>
 </section>
-<script src="node_modules/jquery/dist/jquery.js"></script>
+
 <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
 
 <!-- Add new meeting modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,12 +215,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="names" class="col col-form-label">Deelnemer</label>
+                        <label class="col col-form-label">Deelnemer</label>
                         <div class="col">
-                            <select th:field="*{name}" id="names" class="custom-select">
-                                <option th:each="deelnemer : ${deelnemers}" th:value="${deelnemer.name}"
-                                        th:text="${deelnemer.name}"></option>
-                            </select>
+                            <input type="text" class="form-control" th:field="*{name}" id="deelnemer-name" disabled="true"/>
                         </div>
                     </div>
                     <br/>
