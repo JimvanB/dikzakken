@@ -14,12 +14,10 @@ public class MeetingKeyComparator implements Comparator<String> {
         Integer[] s1 = getIntergerArray(m1);
         Integer[] s2 = getIntergerArray(m2);
 
-        if (s1[2] > s2[2]) return 1;
-        if (s1[2] < s2[2]) return -1;
-        if (s1[1] > s2[1]) return 1;
-        if (s1[1] < s2[1]) return -1;
-        if (s1[0] > s2[0]) return 1;
-        if (s1[0] < s2[0]) return -1;
+        for (int i = s1.length - 1; i >= 0; i--) {
+            if (s1[i] > s2[i]) return 1;
+            if (s1[i] < s2[i]) return -1;
+        }
         return 0;
     }
 
