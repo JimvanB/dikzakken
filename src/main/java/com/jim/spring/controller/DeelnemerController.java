@@ -5,6 +5,8 @@ import com.jim.spring.convertor.MeetingConverter;
 import com.jim.spring.domain.Deelnemer;
 import com.jim.spring.domain.Meeting;
 import com.jim.spring.service.DeelnemerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,5 +58,12 @@ public class DeelnemerController {
             return "redirect:/";
         }
         return "/errorss";
+    }
+
+    @Transactional
+    @GetMapping("/page/")
+    public String deelnemerPagination(Model model, Pageable pageable) {
+        Page page = deelnemerService.findDeelnemersByPage(pageable);
+        return "redirect:/";
     }
 }

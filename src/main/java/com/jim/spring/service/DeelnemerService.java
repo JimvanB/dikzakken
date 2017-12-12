@@ -2,6 +2,8 @@ package com.jim.spring.service;
 
 import com.jim.spring.domain.Deelnemer;
 import com.jim.spring.repository.DeelnemerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.stream.StreamSupport;
 public class DeelnemerService {
 
     private DeelnemerRepository deelnemerRepository;
+    private DeelnemerPaginationReposity deelnemerPaginationReposity;
 
-    public DeelnemerService(DeelnemerRepository deelnemerRepository) {
+    public DeelnemerService(DeelnemerRepository deelnemerRepository, DeelnemerPaginationReposity deelnemerPaginationReposity) {
         this.deelnemerRepository = deelnemerRepository;
+        this.deelnemerPaginationReposity = deelnemerPaginationReposity;
     }
 
     public List<Deelnemer> getAllDeelnemers(){
@@ -30,5 +34,9 @@ public class DeelnemerService {
 
     public Deelnemer saveDeelnemer(Deelnemer deelnemer){
         return deelnemerRepository.save(deelnemer);
+    }
+
+    public Page findDeelnemersByPage(Pageable pageable) {
+        return deelnemerPaginationReposity.getDeelnemerByPage(pageable);
     }
 }
