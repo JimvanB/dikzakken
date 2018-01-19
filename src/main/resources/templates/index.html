@@ -18,6 +18,10 @@
                 var selectedGroupByDropdownBox = document.getElementById("groupBySelector");
                 var selectedGroupBy = selectedGroupByDropdownBox.options[selectedGroupByDropdownBox.selectedIndex].value;
 
+                var labelOption =1;
+                if(selectedGroupBy === "day"){
+                    labelOption =3;
+                }
 
                 var options = {
                     title: 'Voortgang',
@@ -27,7 +31,10 @@
                     },
                     hAxes: {
                         // Adds titles to each axis.
-                        0: {title: selectedGroupBy}
+                        0: {
+                            title: selectedGroupBy,
+                            showTextEvery: labelOption
+                        }
                     },
                     chartArea: {left: 80, top: 50, right: 10},
                     legend: {position: 'bottom'}
@@ -47,13 +54,13 @@
             var selectedGroupBy = selectedGroupByDropdownBox.options[selectedGroupByDropdownBox.selectedIndex].value;
 
 
-            if (selectedUser == 'all') {
-                drawChart();
-                return;
-            }
             $.get("/chart/" + selectedUser + "/" + selectedGroupBy, function (mydata) {
                 var data = google.visualization.arrayToDataTable(mydata);
-
+                var labelOption =1;
+                console.log(selectedGroupBy);
+                if(selectedGroupBy === "day"){
+                    labelOption =3;
+                }
 
                 var options = {
                     title: 'Voortgang',
@@ -63,9 +70,11 @@
                     },
                     hAxes: {
                         // Adds titles to each axis.
-                        0: {title: selectedGroupBy}
+                        0: {title: selectedGroupBy, showTextEvery: labelOption },
+
                     },
                     chartArea: {left: 80, top: 50, right: 10},
+
                     legend: {position: 'bottom'}
                 };
 
@@ -139,7 +148,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" th:attr="data-whatever=${deelnemer.name}">Add</a>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                                       th:attr="data-whatever=${deelnemer.name}">Add</a>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +194,8 @@
 
 <!-- Add new meeting modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -216,7 +227,8 @@
                     <div class="row">
                         <label class="col col-form-label">Deelnemer</label>
                         <div class="col">
-                            <input type="text" class="form-control" th:field="*{name}" id="deelnemer-name" readonly="readonly"/>
+                            <input type="text" class="form-control" th:field="*{name}" id="deelnemer-name"
+                                   readonly="readonly"/>
                         </div>
                     </div>
                     <br/>
@@ -232,8 +244,8 @@
     </div>
 </div>
 <br/>
-    <div class="container">
-        <p class="text-muted text-center">Created by <a href="#">Jim van Biezen</a> ©</p>
-    </div>
+<div class="container">
+    <p class="text-muted text-center">Created by <a href="#">Jim van Biezen</a> ©</p>
+</div>
 </body>
 </html>

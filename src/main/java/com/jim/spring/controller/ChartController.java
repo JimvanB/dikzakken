@@ -30,6 +30,23 @@ public class ChartController {
     public Object[][] getAllData() {
 
         List<Deelnemer> deelnemerList = deelnemerService.getAllDeelnemers();
+        deelnemerList = getDeelnemersList(deelnemerList);
+        return vulMeetingen(deelnemerList, DatumGroepering.DAY);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/chart/{name}/{groupBy}", produces = "application/json")
+    public Object[][] getDeelnemerData(@PathVariable("name") String name, @PathVariable("groupBy") String groupBy) {
+        List<Deelnemer> deelnemers = new ArrayList<>();
+        if(name.equals("all")){
+            deelnemers = getDeelnemersList(deelnemerService.getAllDeelnemers());
+        } else {
+            deelnemers.add(deelnemerService.findDeelnemerByName(name));
+        }
+        return vulMeetingen(deelnemers, getGroupering(groupBy));
+    }
+
+    private List<Deelnemer> getDeelnemersList(List<Deelnemer> deelnemerList) {
         Iterator<Deelnemer> it = deelnemerList.iterator();
         deelnemerList = new ArrayList<>();
         int mostAmountOfMeetingen = 0;
@@ -46,19 +63,10 @@ public class ChartController {
         }
 
 
-
-
-        Object[][] array = vulMeetingen(deelnemerList, DatumGroepering.DAY);
-        return array;
+       return deelnemerList;
     }
 
-    @ResponseBody
-    @GetMapping(value = "/chart/{name}/{groupBy}", produces = "application/json")
-    public Object[][] getDeelnemerData(@PathVariable("name") String name, @PathVariable("groupBy") String groupBy) {
-        Deelnemer deelnemer = deelnemerService.findDeelnemerByName(name);
-        Object[][] array = vulMeetingen(new ArrayList() {{add(deelnemer);}}, getGroupering(groupBy));
-        return array;
-    }
+
 
     private DatumGroepering getGroupering(String groupBy) {
         return DatumGroepering.valueOf(groupBy.toUpperCase());
