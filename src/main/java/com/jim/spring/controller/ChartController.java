@@ -129,9 +129,9 @@ public class ChartController {
             case DAY:
                 return meeting.getTime().getDayOfMonth() + "-" + meeting.getTime().getMonthValue() + "-" + meeting.getTime().getYear();
             case WEEK:
-                return String.valueOf(meeting.getTime().get((WeekFields.of(Locale.UK).weekOfWeekBasedYear())));
+                return String.valueOf(meeting.getTime().get((WeekFields.of(Locale.UK).weekOfWeekBasedYear()))) + "-"+meeting.getTime().getYear();
             case MONTH:
-                return String.valueOf(meeting.getTime().getMonthValue());
+                return String.valueOf(meeting.getTime().getMonthValue() + "-"+meeting.getTime().getYear());
             case YEAR:
                 return String.valueOf(meeting.getTime().getYear());
             default:
